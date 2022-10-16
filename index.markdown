@@ -15,6 +15,6 @@ We're actively seeking volunteers to help with the project. Join [the discord](h
 
 Keep up with the latest developments by following us on [Twitter](https://twitter.com/impactlist_) or [Github](https://github.com/impactlist). 
 
-A simple mockup (with fake data):
+A simple mockup (with fake data -- [full demo here](https://billionaires-git-impact-ideopunk.vercel.app/)):
 
 ![il](impactlist.png)
