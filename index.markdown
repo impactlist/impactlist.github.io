@@ -13,7 +13,7 @@ See [this description of the project](https://forum.effectivealtruism.org/posts/
 
 We're actively seeking volunteers to help with the project. Join [the discord](https://discord.gg/6GNre8U2ta) to see how you can get involved. 
 
-Keep up with the latest developments by following us on [Twitter](https://twitter.com/impactlist_) or [Github](https://github.com/impactlist). 
+Keep up with the latest developments by following us on [Twitter](https://twitter.com/impactlist_) or [Github](https://github.com/impactlist). Email elliotolds at gmail with any questions.
 
 A simple mockup (with fake data -- [full demo here](https://billionaires-git-impact-ideopunk.vercel.app/)):
 
