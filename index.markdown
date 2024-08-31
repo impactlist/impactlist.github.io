@@ -5,7 +5,7 @@
 layout: default
 ---
 
-Impact List is a project that aims to build and maintain a list which ranks the top ~1000 living people by their positive impact on the world via donations. 
+Impact List is a project that aims to build and maintain a list which ranks the top ~50 living people by their positive impact on the world via donations. 
 
 The goal is to make the list popular enough to increase the status awarded to those who rank highly, bring more awareness to the importance of donation effectiveness, and ultimately cause people to donate more effectively and/or donate more money to effective causes.
 
