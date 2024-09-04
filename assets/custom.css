@@ -1,0 +1,49 @@
+#impactTable {
+    table-layout: fixed;
+    width: 100%;
+    font-size: 14px; /* Adjust as needed */
+  }
+  
+  #impactTable th,
+  #impactTable td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px 2px; /* Minimal padding */
+  }
+  
+  /* Rank column */
+  #impactTable th:nth-child(1),
+  #impactTable td:nth-child(1) {
+    width: 18px;
+  }
+  
+  /* Name column */
+  #impactTable th:nth-child(2),
+  #impactTable td:nth-child(2) {
+    width: 70px;
+  }
+  
+  /* Lives column */
+  #impactTable th:nth-child(3),
+  #impactTable td:nth-child(3) {
+    width: 40px;
+  }
+  
+  /* Donated column */
+  #impactTable th:nth-child(4),
+  #impactTable td:nth-child(4) {
+    width: 30px;
+  }
+  
+  /* Cost/life column */
+  #impactTable th:nth-child(5),
+  #impactTable td:nth-child(5) {
+    width: 30px;
+  }
+  
+  /* Net Worth column */
+  #impactTable th:nth-child(6),
+  #impactTable td:nth-child(6) {
+    width: 30px;
+  }
