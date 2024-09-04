@@ -13,7 +13,7 @@ layout: default
       <th data-type="string">Name</th>
       <th data-type="number">Lives</th>
       <th data-type="number">Donated</th>
-      <th data-type="number">Cost/life</th>
+      <th data-type="number">Cost/Life</th>
       <th data-type="number">Net Worth</th>
     </tr>
   </thead>
@@ -26,12 +26,12 @@ layout: default
 document.addEventListener('DOMContentLoaded', function() {
   // Existing data
   const data = [
-    { rank: 1, name: "Dustin Moskovitz", impact: "16,000K", donated: "$0.8B", costPerLife: "$50", netWorth: "$5.5B" },
-    { rank: 2, name: "Cari Tuna", impact: "16,000K", donated: "$0.8B", costPerLife: "$50", netWorth: "$5.5B" },
-    { rank: 3, name: "Bill Gates", impact: "7,000K", donated: "$38B", costPerLife: "$5429", netWorth: "$127B" },
-    { rank: 4, name: "Vitalik Buterin", impact: "6,800K", donated: "$1.6B", costPerLife: "$235", netWorth: "$0.9B" },
-    { rank: 5, name: "Melinda Gates", impact: "6,440K", donated: "$36B", costPerLife: "$5590", netWorth: "$5.8B" },
-    { rank: 6, name: "Warren Buffet", impact: "5,700K", donated: "$32.1B", costPerLife: "$5592", netWorth: "$114.2B" }
+    { rank: 1, name: "Dustin Moskovitz", impact: "16,000K", donated: "$0.8B", netWorth: "$5.5B" },
+    { rank: 2, name: "Cari Tuna", impact: "16,000K", donated: "$0.8B", netWorth: "$5.5B" },
+    { rank: 3, name: "Bill Gates", impact: "7,000K", donated: "$38B", netWorth: "$127B" },
+    { rank: 4, name: "Vitalik Buterin", impact: "6,800K", donated: "$1.6B", netWorth: "$0.9B" },
+    { rank: 5, name: "Melinda Gates", impact: "6,440K", donated: "$36B", netWorth: "$5.8B" },
+    { rank: 6, name: "Warren Buffet", impact: "5,700K", donated: "$32.1B", netWorth: "$114.2B" }
   ];
 
   const table = document.getElementById('impactTable');
@@ -47,7 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
       row.insertCell(1).textContent = person.name;
       row.insertCell(2).textContent = person.impact;
       row.insertCell(3).textContent = person.donated;
-      row.insertCell(4).textContent = person.costPerLife;
+      
+      // Calculate and display costPerLife
+      const impact = parseDollarAmount(person.impact);
+      const donated = parseDollarAmount(person.donated);
+      const costPerLife = Math.round(donated / impact);
+      row.insertCell(4).textContent = `$${costPerLife.toLocaleString()}`;
+      
       row.insertCell(5).textContent = person.netWorth;
     });
   }
@@ -62,7 +68,10 @@ document.addEventListener('DOMContentLoaded', function() {
         case 1: aVal = a.name; bVal = b.name; break;
         case 2: aVal = parseDollarAmount(a.impact); bVal = parseDollarAmount(b.impact); break;
         case 3: aVal = parseDollarAmount(a.donated); bVal = parseDollarAmount(b.donated); break;
-        case 4: aVal = parseDollarAmount(a.costPerLife); bVal = parseDollarAmount(b.costPerLife); break;
+        case 4: 
+          aVal = parseDollarAmount(a.donated) / parseDollarAmount(a.impact);
+          bVal = parseDollarAmount(b.donated) / parseDollarAmount(b.impact);
+          break;
         case 5: aVal = parseDollarAmount(a.netWorth); bVal = parseDollarAmount(b.netWorth); break;
       }
 
