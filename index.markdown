@@ -96,15 +96,28 @@ document.addEventListener('DOMContentLoaded', function() {
   headers.forEach((header, index) => {
     header.addEventListener('click', () => {
       const type = header.getAttribute('data-type');
-      sortTable(index, type);
       
-      // Remove existing sort classes
+      // Remove existing sort classes from all headers
       headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
       
-      // Add appropriate sort class
+      // Toggle sort direction
+      if (this.sortColumn === index) {
+        this.asc = !this.asc;
+      } else {
+        this.sortColumn = index;
+        this.asc = true;
+      }
+      
+      // Add appropriate class to the clicked header
       header.classList.add(this.asc ? 'sort-asc' : 'sort-desc');
+      
+      sortTable(index, type);
     });
   });
+
+  // Initial state
+  this.sortColumn = null;
+  this.asc = true;
 
   // Initial population of table
   populateTable(data);
