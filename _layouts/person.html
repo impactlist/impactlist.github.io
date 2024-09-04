@@ -19,10 +19,33 @@ layout: default
   </tr>
   <tr>
     <th>Cost per Life</th>
-    <td>${{ page.costPerLife }}</td>
+    <td id="costPerLife"></td>
   </tr>
   <tr>
     <th>Net Worth</th>
     <td>{{ page.netWorth }}</td>
   </tr>
 </table>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  function parseDollarAmount(value) {
+    const numericValue = parseFloat(value.replace(/[$,]/g, ""));
+    if (value.includes('B')) {
+      return numericValue * 1e9;
+    } else if (value.includes('M')) {
+      return numericValue * 1e6;
+    } else if (value.includes('K')) {
+      return numericValue * 1e3;
+    }
+    return numericValue;
+  }
+
+  const impact = parseDollarAmount("{{ page.impact }}");
+  const donated = parseDollarAmount("{{ page.donated }}");
+  const costPerLife = Math.round(donated / impact);
+
+  document.getElementById('costPerLife').textContent = `$${costPerLife.toLocaleString()}`;
+});
+</script>
