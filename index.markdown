@@ -53,35 +53,33 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Updated sortTable function
-  function sortTable(column, type) {
-    const direction = this.asc ? 1 : -1;
-    const sortedData = data.sort((a, b) => {
+  function sortTable(column, type, asc) {
+    const direction = asc ? 1 : -1;
+    data.sort((a, b) => {
       let aVal, bVal;
-      switch(column) {
+      switch (column) {
         case 0: aVal = a.rank; bVal = b.rank; break;
         case 1: aVal = a.name; bVal = b.name; break;
-        case 2: aVal = a.impact; bVal = b.impact; break;
-        case 3: aVal = a.donated; bVal = b.donated; break;
-        case 4: aVal = a.costPerLife; bVal = b.costPerLife; break;
-        case 5: aVal = a.netWorth; bVal = b.netWorth; break;
+        case 2: aVal = parseDollarAmount(a.impact); bVal = parseDollarAmount(b.impact); break;
+        case 3: aVal = parseDollarAmount(a.donated); bVal = parseDollarAmount(b.donated); break;
+        case 4: aVal = parseDollarAmount(a.costPerLife); bVal = parseDollarAmount(b.costPerLife); break;
+        case 5: aVal = parseDollarAmount(a.netWorth); bVal = parseDollarAmount(b.netWorth); break;
       }
 
-      if (type === 'number') {
-        aVal = parseDollarAmount(aVal);
-        bVal = parseDollarAmount(bVal);
+      if (type === 'string') {
+        return direction * aVal.localeCompare(bVal);
+      } else {
+        return direction * (aVal - bVal);
       }
-
-      return aVal > bVal ? direction : aVal < bVal ? -direction : 0;
     });
 
-    this.asc = !this.asc;
-    populateTable(sortedData);
+    populateTable(data);
   }
 
   // Updated parseDollarAmount function
   function parseDollarAmount(value) {
     if (typeof value === 'number') return value;
-    const numericValue = parseFloat(value.replace(/[$,K]/g, ""));
+    const numericValue = parseFloat(value.replace(/[$,]/g, ""));
     if (value.includes('B')) {
       return numericValue * 1e9;
     } else if (value.includes('M')) {
@@ -92,34 +90,34 @@ document.addEventListener('DOMContentLoaded', function() {
     return numericValue;
   }
 
-  // Add click event to headers
+  // Updated click event listener for headers
   headers.forEach((header, index) => {
+    header.dataset.asc = 'true'; // Initialize the dataset attribute for sort direction
+
     header.addEventListener('click', () => {
       const type = header.getAttribute('data-type');
-      
+
       // Remove existing sort classes from all headers
       headers.forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-      
-      // Toggle sort direction
-      if (this.sortColumn === index) {
-        this.asc = !this.asc;
+
+      // Toggle sort direction based on the current state
+      const isAsc = header.dataset.asc === 'true';
+      const newAsc = !isAsc; // Toggle the current sort direction
+      header.dataset.asc = newAsc.toString(); // Save the new sort direction in the dataset
+
+      if (newAsc) {
+        header.classList.add('sort-asc');
       } else {
-        this.sortColumn = index;
-        this.asc = true;
+        header.classList.add('sort-desc');
       }
-      
-      // Add appropriate class to the clicked header
-      header.classList.add(this.asc ? 'sort-asc' : 'sort-desc');
-      
-      sortTable(index, type);
+
+      sortTable(index, type, newAsc);
     });
   });
 
   // Initial state
-  this.sortColumn = null;
-  this.asc = true;
-
-  // Initial population of table
+  headers[2].classList.add('sort-desc');
+  sortTable(2, 'number', false);
   populateTable(data);
 });
 </script>
