@@ -1,3 +1,6 @@
+---
+---
+
 #impactTable {
     table-layout: fixed;
     width: 100%;
@@ -10,6 +13,23 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 5px 2px; /* Minimal padding */
+  }
+  
+  #impactTable th {
+    background-color: #b8d8ff; /* Darker blue for the header */
+    cursor: pointer;
+  }
+  
+  #impactTable tbody tr:nth-child(even) {
+    background-color: #e6f3ff; /* Light blue shade for even rows */
+  }
+  
+  #impactTable tbody tr:nth-child(odd) {
+    background-color: #f0f8ff; /* Slightly lighter blue shade for odd rows */
+  }
+  
+  #impactTable tbody tr:hover {
+    background-color: #d4e9ff; /* Darker shade of blue for hover effect */
   }
   
   /* Rank column */
