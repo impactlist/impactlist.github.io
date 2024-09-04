@@ -44,7 +44,14 @@ document.addEventListener('DOMContentLoaded', function() {
     data.forEach(person => {
       const row = tableBody.insertRow();
       row.insertCell(0).textContent = person.rank;
-      row.insertCell(1).textContent = person.name;
+      
+      // Create a link for the person's name
+      const nameCell = row.insertCell(1);
+      const nameLink = document.createElement('a');
+      nameLink.href = `/${person.name.replace(/\s+/g, '_')}`;
+      nameLink.textContent = person.name;
+      nameCell.appendChild(nameLink);
+      
       row.insertCell(2).textContent = person.impact;
       row.insertCell(3).textContent = person.donated;
       

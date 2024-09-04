@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<h1>{{ page.name }}</h1>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <td>{{ page.rank }}</td>
+  </tr>
+  <tr>
+    <th>Lives Saved</th>
+    <td>{{ page.impact }}</td>
+  </tr>
+  <tr>
+    <th>Donated</th>
+    <td>{{ page.donated }}</td>
+  </tr>
+  <tr>
+    <th>Cost per Life</th>
+    <td>${{ page.costPerLife }}</td>
+  </tr>
+  <tr>
+    <th>Net Worth</th>
+    <td>{{ page.netWorth }}</td>
+  </tr>
+</table>
+
+<a href="/">Back to List</a>
