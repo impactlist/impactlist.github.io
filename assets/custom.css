@@ -18,6 +18,27 @@
   #impactTable th {
     background-color: #b8d8ff; /* Darker blue for the header */
     cursor: pointer;
+    position: relative;
+    padding-right: 20px; /* Make room for the arrow */
+  }
+  
+  #impactTable th::after {
+    content: '\25B4'; /* Up arrow */
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+  }
+  
+  #impactTable th.sort-asc::after {
+    content: '\25B4'; /* Up arrow */
+    opacity: 1;
+  }
+  
+  #impactTable th.sort-desc::after {
+    content: '\25BE'; /* Down arrow */
+    opacity: 1;
   }
   
   #impactTable tbody tr:nth-child(even) {
