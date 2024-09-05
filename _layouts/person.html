@@ -34,17 +34,19 @@ layout: default
       <tr>
         <th>Date</th>
         <th>Amount</th>
-        <th>Charity</th>
-        <th>Reference</th>
+        <th>Recipient</th>
+        <th>Area</th>
+        <th>Lives Saved</th>
       </tr>
     </thead>
     <tbody>
       {% for donation in page.donations %}
         <tr>
           <td>{{ donation.date }}</td>
-          <td>{{ donation.amount }}</td>
-          <td>{{ donation.charity }}</td>
-          <td><a href="{{ donation.reference }}" target="_blank">Link</a></td>
+          <td><a href="{{ donation.reference }}" target="_blank">{{ donation.amount }}</a></td>
+          <td>{{ donation.recipient }}</td>
+          <td>{{ donation.area }}</td>
+          <td>{{ donation.lives_saved }}</td>
         </tr>
       {% endfor %}
     </tbody>
