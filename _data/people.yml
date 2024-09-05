@@ -1,36 +1,30 @@
 - name: Dustin Moskovitz
-  rank: 1
   impact: 16,000K
   donated: $0.8B
   netWorth: $5.5B
 
 - name: Cari Tuna
-  rank: 2
   impact: 16,000K
   donated: $0.8B
   netWorth: $5.5B
 
 - name: Bill Gates
-  rank: 3
   impact: 7,000K
   donated: $38B
   netWorth: $127B
 
 # ... add other people here ...
 - name: Warren Buffett
-  rank: 6
   impact: 5,700K
   donated: $32.1B
   netWorth: $114.2B
 
 - name: Vitalik Buterin
-  rank: 5
   impact: 6,800K
   donated: $1.6B
   netWorth: $1B
 
 - name: Melinda Gates
-  rank: 4
   impact: 6,440K
   donated: $10B
   netWorth: $100B

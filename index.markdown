@@ -24,10 +24,10 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Load data from _data/people.yml
   const data = [
     {% for person in site.data.people %}
       {
-        rank: "{{ person.rank }}",
         name: "{{ person.name }}",
         impact: "{{ person.impact }}",
         donated: "{{ person.donated }}",
@@ -35,6 +35,21 @@ document.addEventListener('DOMContentLoaded', function() {
       }{% unless forloop.last %},{% endunless %}
     {% endfor %}
   ];
+
+  // Function to parse dollar amounts
+  function parseDollarAmount(value) {
+    const numericValue = parseFloat(value.replace(/[$,]/g, ""));
+    if (value.includes('B')) return numericValue * 1e9;
+    if (value.includes('M')) return numericValue * 1e6;
+    if (value.includes('K')) return numericValue * 1e3;
+    return numericValue;
+  }
+
+  // Sort data by impact and assign ranks
+  data.sort((a, b) => parseDollarAmount(b.impact) - parseDollarAmount(a.impact));
+  data.forEach((person, index) => {
+    person.rank = index + 1;
+  });
 
   const table = document.getElementById('impactTable');
   const headers = table.querySelectorAll('th');
@@ -92,20 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     populateTable(data);
-  }
-
-  // Updated parseDollarAmount function
-  function parseDollarAmount(value) {
-    if (typeof value === 'number') return value;
-    const numericValue = parseFloat(value.replace(/[$,]/g, ""));
-    if (value.includes('B')) {
-      return numericValue * 1e9;
-    } else if (value.includes('M')) {
-      return numericValue * 1e6;
-    } else if (value.includes('K')) {
-      return numericValue * 1e3;
-    }
-    return numericValue;
   }
 
   // Updated click event listener for headers
