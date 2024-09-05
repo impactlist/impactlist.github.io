@@ -1,0 +1,12 @@
+---
+---
+[
+  {% for person in site.people %}
+    {
+      "name": {{ person.name | jsonify }},
+      "impact": {{ person.impact | jsonify }},
+      "donated": {{ person.donated | jsonify }},
+      "netWorth": {{ person.netWorth | jsonify }}
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]

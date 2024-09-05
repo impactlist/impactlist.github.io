@@ -26,9 +26,9 @@ layout: default
 document.addEventListener('DOMContentLoaded', function() {
   // Load data from _data/people.yml
   const data = [
-    {% for person in site.data.people %}
+    {% for person in site.people %}
       {
-        name: "{{ person.name }}",
+        name: "{{ person.title }}",
         impact: "{{ person.impact }}",
         donated: "{{ person.donated }}",
         netWorth: "{{ person.netWorth }}"
