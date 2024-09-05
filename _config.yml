@@ -61,10 +61,10 @@ collections:
     permalink: /:title/
 
 defaults:
-  scope:
+  - scope:
       path: ""
       type: "people"
-  values:
-    layout: "person"
+    values:
+      layout: "person"
 
 

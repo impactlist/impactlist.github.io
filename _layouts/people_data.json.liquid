@@ -3,7 +3,7 @@
 [
   {% for person in site.people %}
     {
-      "name": {{ person.name | jsonify }},
+      "name": {{ person.title | jsonify }},
       "impact": {{ person.impact | jsonify }},
       "donated": {{ person.donated | jsonify }},
       "netWorth": {{ person.netWorth | jsonify }}
