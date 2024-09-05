@@ -2,20 +2,22 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
+{% assign person = site.data.people | where: "name", page.title | first %}
+
+<h1>{{ person.name }}</h1>
 
 <table>
   <tr>
     <th>Rank</th>
-    <td>{{ page.rank }}</td>
+    <td>{{ person.rank }}</td>
   </tr>
   <tr>
     <th>Lives Saved</th>
-    <td>{{ page.impact }}</td>
+    <td>{{ person.impact }}</td>
   </tr>
   <tr>
     <th>Donated</th>
-    <td>{{ page.donated }}</td>
+    <td>{{ person.donated }}</td>
   </tr>
   <tr>
     <th>Cost per Life</th>
@@ -23,10 +25,9 @@ layout: default
   </tr>
   <tr>
     <th>Net Worth</th>
-    <td>{{ page.netWorth }}</td>
+    <td>{{ person.netWorth }}</td>
   </tr>
 </table>
-
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -42,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return numericValue;
   }
 
-  const impact = parseDollarAmount("{{ page.impact }}");
-  const donated = parseDollarAmount("{{ page.donated }}");
+  const impact = parseDollarAmount("{{ person.impact }}");
+  const donated = parseDollarAmount("{{ person.donated }}");
   const costPerLife = Math.round(donated / impact);
 
   document.getElementById('costPerLife').textContent = `$${costPerLife.toLocaleString()}`;

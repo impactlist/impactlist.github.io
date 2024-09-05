@@ -24,14 +24,16 @@ layout: default
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Existing data
   const data = [
-    { rank: 1, name: "Dustin Moskovitz", impact: "16,000K", donated: "$0.8B", netWorth: "$5.5B" },
-    { rank: 2, name: "Cari Tuna", impact: "16,000K", donated: "$0.8B", netWorth: "$5.5B" },
-    { rank: 3, name: "Bill Gates", impact: "7,000K", donated: "$38B", netWorth: "$127B" },
-    { rank: 4, name: "Vitalik Buterin", impact: "6,800K", donated: "$1.6B", netWorth: "$0.9B" },
-    { rank: 5, name: "Melinda Gates", impact: "6,440K", donated: "$36B", netWorth: "$5.8B" },
-    { rank: 6, name: "Warren Buffet", impact: "5,700K", donated: "$32.1B", netWorth: "$114.2B" }
+    {% for person in site.data.people %}
+      {
+        rank: "{{ person.rank }}",
+        name: "{{ person.name }}",
+        impact: "{{ person.impact }}",
+        donated: "{{ person.donated }}",
+        netWorth: "{{ person.netWorth }}"
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
   ];
 
   const table = document.getElementById('impactTable');
