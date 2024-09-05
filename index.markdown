@@ -22,10 +22,14 @@ layout: default
   </tbody>
 </table>
 
+
+<script src="{{ '/assets/js/common.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/compute_ranks.js' | relative_url }}"></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Load data from _data/people.yml
-  const data = [
+  const unrankedData = [
     {% for person in site.people %}
       {
         name: "{{ person.title }}",
@@ -36,47 +40,20 @@ document.addEventListener('DOMContentLoaded', function() {
     {% endfor %}
   ];
 
-  // Function to parse dollar amounts
-  function parseDollarAmount(value) {
-    const numericValue = parseFloat(value.replace(/[$,]/g, ""));
-    if (value.includes('B')) return numericValue * 1e9;
-    if (value.includes('M')) return numericValue * 1e6;
-    if (value.includes('K')) return numericValue * 1e3;
-    return numericValue;
-  }
-
-  // Sort data by impact
-  data.sort((a, b) => parseDollarAmount(b.impact) - parseDollarAmount(a.impact));
-
-  // Assign ranks with tie handling
-  let previousRank = 0;
-  let previousImpact = Infinity;
-  let tieCount = 0;
-
-  data.forEach((person, index) => {
-    const personImpact = parseDollarAmount(person.impact);
-    if (personImpact < previousImpact) {
-      person.rank = previousRank + tieCount + 1;
-      previousImpact = personImpact;
-      previousRank = person.rank;
-      tieCount = 0;
-    } else if (personImpact === previousImpact) {
-      person.rank = previousRank;
-      tieCount++;
-    } else if (personImpact > previousImpact) {
-        // throw exception
-        throw new Error("Person impact is greater than previous impact");
-    }
-  });
+  // Pretty sure rankedData is now just a reference to the same statically generated
+  // object as unrankedData, which Jekyll created at build time.
+  // If you print both of them out, you see unrankedData is ranked.
+  // Or, computeRanks is called on every page load??
+  const rankedData = computeRanks(unrankedData);
 
   const table = document.getElementById('impactTable');
   const headers = table.querySelectorAll('th');
   const tableBody = table.querySelector('tbody');
 
   // Populate the table
-  function populateTable(data) {
+  function populateTable(argData) {
     tableBody.innerHTML = '';
-    data.forEach(person => {
+    argData.forEach(person => {
       const row = tableBody.insertRow();
       row.insertCell(0).textContent = person.rank;
       
@@ -103,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Updated sortTable function
   function sortTable(column, type, asc) {
     const direction = asc ? 1 : -1;
-    data.sort((a, b) => {
+    rankedData.sort((a, b) => {
       let aVal, bVal;
       switch (column) {
         case 0: aVal = a.rank; bVal = b.rank; break;
@@ -123,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return direction * (aVal - bVal);
       }
     });
-
-    populateTable(data);
+  
+    populateTable(rankedData);
   }
 
   // Updated click event listener for headers
@@ -155,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial state
   headers[2].classList.add('sort-desc');
   sortTable(2, 'number', false);
-  populateTable(data);
+  populateTable(rankedData);
 });
 </script>
 
