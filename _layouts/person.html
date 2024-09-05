@@ -6,8 +6,8 @@ layout: default
 
 <table>
   <tr>
-    <th>Rank</th>
-    <td id="personRank">Calculating...</td>
+    <th>Impact Rank</th>
+    <td id="impactRank">Calculating...</td>
   </tr>
   <tr>
     <th>Lives Saved</th>
@@ -18,7 +18,7 @@ layout: default
     <td>{{ page.donated }}</td>
   </tr>
   <tr>
-    <th>Cost per Life</th>
+    <th>Cost/Life</th>
     <td id="costPerLife">Calculating...</td>
   </tr>
   <tr>
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const currentPerson = rankedData.find(p => p.name === "{{ page.title }}");
   
   if (currentPerson) {
-    document.getElementById('personRank').textContent = currentPerson.rank;
+    document.getElementById('impactRank').textContent = currentPerson.rank;
   }
 
   const impact = parseDollarAmount("{{ page.impact }}");
