@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     {% endfor %}
   ];
 
-  // Pretty sure rankedData is now just a reference to the same statically generated
+  // Pretty sure rankedData is just a reference to the same statically generated
   // object as unrankedData, which Jekyll created at build time.
   // If you print both of them out, you see unrankedData is ranked.
   // Or, computeRanks is called on every page load??
