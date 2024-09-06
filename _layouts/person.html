@@ -37,16 +37,37 @@ layout: default
         <th>Recipient</th>
         <th>Area</th>
         <th>Lives Saved</th>
+        <th>Cost/Life</th>
       </tr>
     </thead>
     <tbody>
       {% for donation in page.donations %}
+        {% assign amount_str = donation.amount | remove: '$' | remove: ',' %}
+        
+        {% if donation.amount contains 'B' %}
+          {% assign multiplier = 1000000000 %}
+          {% assign amount_str = amount_str | remove: 'B' %}
+        {% elsif donation.amount contains 'M' %}
+          {% assign multiplier = 1000000 %}
+          {% assign amount_str = amount_str | remove: 'M' %}
+        {% elsif donation.amount contains 'K' %}
+          {% assign multiplier = 1000 %}
+          {% assign amount_str = amount_str | remove: 'K' %}
+        {% else %}
+          {% assign multiplier = 1 %}
+        {% endif %}
+        
+        {% assign amount_float = amount_str | times: 1.0 %}
+        {% assign amount_numeric = amount_float | times: multiplier %}
+        
+        {% assign cost_per_life = amount_numeric | divided_by: donation.lives_saved | round %}
         <tr>
           <td>{{ donation.date }}</td>
           <td><a href="{{ donation.reference }}" target="_blank">{{ donation.amount }}</a></td>
           <td>{{ donation.recipient }}</td>
           <td>{{ donation.area }}</td>
           <td>{{ donation.lives_saved }}</td>
+          <td>${{ cost_per_life | number_with_delimiter }}</td>
         </tr>
       {% endfor %}
     </tbody>
