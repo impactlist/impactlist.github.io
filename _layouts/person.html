@@ -29,7 +29,7 @@ layout: default
 
 <h2>Donations</h2>
 {% if page.donations %}
-  <table>
+  <table id="donationsTable">
     <thead>
       <tr>
         <th>Date</th>
@@ -42,32 +42,13 @@ layout: default
     </thead>
     <tbody>
       {% for donation in page.donations %}
-        {% assign amount_str = donation.amount | remove: '$' | remove: ',' %}
-        
-        {% if donation.amount contains 'B' %}
-          {% assign multiplier = 1000000000 %}
-          {% assign amount_str = amount_str | remove: 'B' %}
-        {% elsif donation.amount contains 'M' %}
-          {% assign multiplier = 1000000 %}
-          {% assign amount_str = amount_str | remove: 'M' %}
-        {% elsif donation.amount contains 'K' %}
-          {% assign multiplier = 1000 %}
-          {% assign amount_str = amount_str | remove: 'K' %}
-        {% else %}
-          {% assign multiplier = 1 %}
-        {% endif %}
-        
-        {% assign amount_float = amount_str | times: 1.0 %}
-        {% assign amount_numeric = amount_float | times: multiplier %}
-        
-        {% assign cost_per_life = amount_numeric | divided_by: donation.lives_saved | round %}
         <tr>
           <td>{{ donation.date }}</td>
           <td><a href="{{ donation.reference }}" target="_blank">{{ donation.amount }}</a></td>
           <td>{{ donation.recipient }}</td>
           <td>{{ donation.area }}</td>
           <td>{{ donation.lives_saved }}</td>
-          <td>${{ cost_per_life | number_with_delimiter }}</td>
+          <td class="cost-per-life">Calculating...</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -103,5 +84,21 @@ document.addEventListener('DOMContentLoaded', function() {
   const costPerLife = Math.round(donated / impact);
 
   document.getElementById('costPerLife').textContent = `$${costPerLife.toLocaleString()}`;
+
+  // Calculate cost per life for each donation
+  const donationsTable = document.getElementById('donationsTable');
+  const rows = donationsTable.querySelectorAll('tbody tr');
+  
+  rows.forEach(row => {
+    const amountCell = row.cells[1];
+    const livesSavedCell = row.cells[4];
+    const costPerLifeCell = row.cells[5];
+
+    const amount = parseDollarAmount(amountCell.textContent);
+    const livesSaved = parseDollarAmount(livesSavedCell.textContent);
+    const donationCostPerLife = Math.round(amount / livesSaved);
+
+    costPerLifeCell.textContent = `$${donationCostPerLife.toLocaleString()}`;
+  });
 });
 </script>
