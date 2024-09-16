@@ -6,3 +6,6 @@ function parseDollarAmount(value) {
   if (value.includes('K')) return numericValue * 1e3;
   return numericValue;
 }
+
+// Make the function available globally
+window.parseDollarAmount = parseDollarAmount;

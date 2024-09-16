@@ -1,5 +1,3 @@
-import { parseDollarAmount } from './common.js';
-
 function computeRanks(data) {
   // Sort data by impact
   data.sort((a, b) => parseDollarAmount(b.impact) - parseDollarAmount(a.impact));
@@ -26,3 +24,6 @@ function computeRanks(data) {
 
   return data;
 }
+
+// Make the function available globally
+window.computeRanks = computeRanks;
